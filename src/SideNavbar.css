@@ -316,7 +316,7 @@ select {
 }
 .link-text {
   margin: 0;
-  width: 12px;
+  width: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: all .35s cubic-bezier(var(--transition-main), 1);
@@ -324,7 +324,7 @@ select {
   opacity: 0;
 }
 #navbar:hover .link-text {
-  width: calc(100% - calc(5rem - 12px));
+  width: calc(100% - calc(5rem - 8px));
   opacity: 1;
 }
 
@@ -353,11 +353,6 @@ select {
   max-width: 80%;
 }
 
-#main iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
 /* =============
   ::Selectors
  ============= */
@@ -444,27 +439,6 @@ select {
 
 }
 
-/* Updated styles for the main content and iframe */
-
-/* Make sure the main content does not overlap with the sidebar */
-.main {
-  margin-left: 5em; /* Adjust this value to match the width of your navbar */
-  width: calc(100% - 5em); /* Take the width of the navbar into account */
-  height: 100vh; /* Full viewport height */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: hsl(var(--background-secondary));
-}
-
-.main iframe {
-  width: 100%; /* Full width of the main content area */
-  height: 100%; /* Full height of the viewport */
-  border: none; /* Remove border to make it seamless */
-  margin: 0; /* Remove any default margins */
-  padding: 0; /* Remove padding */
-}
-
 .link-text {
   margin: 0;
   width: 12px;
@@ -476,20 +450,3 @@ select {
   font-size: 0.8rem; /* Adjust this value to change the font size */
 }
 
-.app-footer {
-  background-color: hsl(var(--background-secondary)); /* Match the navbar color */
-  color: white;
-  text-align: center;
-  padding: 15px 0;
-  position: relative; /* Change to relative so it doesn't overlap the iframe */
-  width: 100%;
-  left: 0;
-  z-index: 1000; /* Ensure it stays on top */
-  display: flex;
-  justify-content: center; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
-}
-
-.app-footer p{
-  font-size: 12px;
-}
