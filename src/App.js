@@ -20,6 +20,11 @@ function App() {
           <Routes>
             <Route path="/" element={<DynamicPowerBIReport reportUrl={reportConfig.report1} />} />
             <Route path="/report2" element={<DynamicPowerBIReport reportUrl={reportConfig.report2} />} />
+            <Route path="/report3" element={<DynamicPowerBIReport reportUrl={reportConfig.report3} />} />
+            <Route path="/report4" element={<DynamicPowerBIReport reportUrl={reportConfig.report4} />} />
+            <Route path="/report5" element={<DynamicPowerBIReport reportUrl={reportConfig.report5} />} />
+            <Route path="/report6" element={<DynamicPowerBIReport reportUrl={reportConfig.report6} />} />
+            <Route path="/report7" element={<DynamicPowerBIReport reportUrl={reportConfig.report7} />} />
           </Routes>
         </div>
          {/* Footer */}
