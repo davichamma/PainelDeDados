@@ -1,0 +1,76 @@
+/* src/AdminDashboard.css */
+
+/* Style for the dropdown toggle button */
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-toggle {
+    padding: 10px;
+    background-color: hsl(var(--background-secondary));
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: hsl(var(--background-secondary-light));
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1000;
+    border-radius: 5px;
+    min-width: 150px;
+    max-height: 300px;
+    overflow: hidden;
+  }
+  
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 icons per row */
+    grid-gap: 10px;
+  }
+  
+  .icon-grid-item {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: hsl(var(--background-secondary-dark));
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+    color: white;
+  }
+  
+  .icon-grid-item:hover {
+    background-color: hsl(var(--background-primary));
+  }
+  
+  .pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .pagination-button {
+    padding: 5px 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .pagination-button IonIcon {
+    font-size: 24px;
+  }
+  
+  .pagination-button:disabled {
+    color: hsl(var(--background-secondary-dark));
+    cursor: not-allowed;
+  }
+  

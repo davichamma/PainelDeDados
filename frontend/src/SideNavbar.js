@@ -51,7 +51,7 @@ const SideNavbar = ({ isOpen }) => {
             <div className="navbar-item-inner-icon-wrapper flexbox">
               <IonIcon icon={schoolOutline} />
             </div>
-            <span className="link-text">Matriculas</span>
+            <span className="link-text">Matrículas</span>
           </Link>
         </li>
         <li className="navbar-item flexbox-left">

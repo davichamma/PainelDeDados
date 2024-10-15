@@ -494,4 +494,16 @@ select {
   font-size: 12px;
 }
 
+.admin-link {
+  color: #ffffff;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  display: block;
+  font-size: 12px;
+}
+
+.admin-link:hover {
+  text-decoration: underline;
+}
+
 

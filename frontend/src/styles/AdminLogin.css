@@ -1,0 +1,86 @@
+/* src/views/AdminLogin.css */
+
+/* Centraliza o container de login */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: hsl(var(--background-secondary));
+    /* Usa a cor de fundo definida no projeto */
+}
+
+.login-box {
+    background-color: hsl(var(--background-secondary-light));
+    /* Fundo da caixa de login */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-box h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Wrapper para os campos de entrada */
+.input-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* Ícone dentro do campo de entrada */
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* Campo de entrada (input) */
+input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    /* Espaço para o ícone */
+    border: none;
+    border-radius: 5px;
+    background-color: hsl(var(--background-secondary-dark));
+    color: white;
+    font-size: 1rem;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px hsl(var(--primary));
+}
+
+/* Botão de login */
+.login-button {
+    width: 100%;
+    padding: 10px;
+    background-color: navy;
+    /* Cor principal do botão */
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: rgb(11, 11, 170);
+    /* Cor do botão ao passar o mouse */
+}
+
+
+p {
+    color: white;
+    margin-bottom: 10px;
+    margin-left: 60px;
+}
