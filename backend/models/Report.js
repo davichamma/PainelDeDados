@@ -1,21 +1,40 @@
 // models/Report.js
-const { DataTypes } = require('sequelize');
-const sequelize = require('../db');
-const Role = require('./Role'); // Import Role model
+module.exports = (sequelize, DataTypes) => {
+  const Report = sequelize.define('Report', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    icon: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: true, // Group is optional
+      references: {
+        model: 'Groups',
+        key: 'id',
+      },
+    },
+  });
 
-const Report = sequelize.define('Report', {
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  url: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-});
+  // Defining associations
+  Report.associate = function(models) {
+    Report.belongsTo(models.Group, {
+      foreignKey: 'groupId',
+      as: 'group',
+    });
+  };
 
-// Reports can be viewed by many roles
-Report.belongsToMany(Role, { through: 'ReportRoles' });
-Role.belongsToMany(Report, { through: 'ReportRoles' });
-
-module.exports = Report;
+  return Report;
+};

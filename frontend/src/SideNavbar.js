@@ -23,7 +23,7 @@ const SideNavbar = ({ isOpen }) => {
           </Link>
         </li>
         <li className="navbar-item flexbox-left">
-          <Link to="/" className="navbar-item-inner flexbox-left">
+          <Link to="/report1" className="navbar-item-inner flexbox-left">
             <div className="navbar-item-inner-icon-wrapper flexbox">
               <IonIcon icon={analyticsOutline} /> 
             </div>

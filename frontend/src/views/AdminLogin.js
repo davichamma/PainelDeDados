@@ -5,10 +5,12 @@ import { lockClosedOutline, personOutline } from 'ionicons/icons'; // Importing 
 import { ToastContainer, toast } from 'react-toastify'; // Toast imports
 import 'react-toastify/dist/ReactToastify.css'; // Toast CSS
 import '../styles/AdminLogin.css'; // Import the styles
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,8 +21,8 @@ const AdminLogin = () => {
 
     if (username === validUsername && password === validPassword) {
       // Simulate successful login
-      localStorage.setItem('isAuthenticated', 'true');
-      window.location.href = '/admin'; // Redirect after login
+      localStorage.setItem('isAuthenticatedAdmin', 'true');
+      navigate('/admin'); // Redirect to admin dashboard after login
     } else {
       // Show a toast message if authentication fails
       toast.error('Usuário não encontrado');

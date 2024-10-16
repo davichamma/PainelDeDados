@@ -1,0 +1,80 @@
+/* src/styles/Login.css */
+::selection {
+    background-color: #0078D4;
+    /* Background color when text is selected */
+    color: white;
+    /* Text color when selected */
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Full viewport height */
+
+}
+
+/* Grouping all elements inside a rounded rectangle */
+.login-page {
+    background-color: white;
+    /* White background for the box */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    /* Shadow for depth */
+    width: 350px;
+    /* Fixed width */
+    max-width: 100%;
+    /* Responsive */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Ensure everything inside is centered */
+    text-align: center;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+    margin-left: 5px;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0078D4;
+    /* Microsoft blue color */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    /* Rounded button */
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* Button shadow */
+    width: 100%;
+    /* Make the button fill the container */
+}
+
+button:hover {
+    background-color: #005a9e;
+    /* Darker blue on hover */
+}
+
+button IonIcon {
+    margin-right: 10px;
+    /* Spacing between icon and text */
+    font-size: 1.3rem;
+}
