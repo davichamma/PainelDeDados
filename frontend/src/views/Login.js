@@ -1,5 +1,5 @@
 // src/views/Login.js
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useMsal } from '@azure/msal-react';
 import { loginRequest } from '../authConfig';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
@@ -9,7 +9,6 @@ import '../styles/Login.css'; // Import the CSS
 import axios from 'axios'; // Import axios for API calls
 import { toast, ToastContainer } from 'react-toastify'; // Import react-toastify
 import 'react-toastify/dist/ReactToastify.css'; // Import react-toastify CSS
-import { useCallback } from 'react';
 
 const Login = () => {
   const { instance } = useMsal();
@@ -22,15 +21,16 @@ const Login = () => {
       // Attempt to log in with Microsoft
       const response = await instance.loginPopup(loginRequest);
       const accessToken = response.accessToken;
+      const username = response.account.username; // Assuming account object has username field
 
-      // Send access token to backend for verification or registration
-      const backendResponse = await axios.post('http://localhost:5000/api/auth/registerOrLogin', {}, {
+      // Send username to backend for verification or registration
+      const backendResponse = await axios.post('http://localhost:5000/api/auth/loginOrRegister', { username }, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
 
-      if (backendResponse.status === 200) {
+      if (backendResponse.status === 200 || backendResponse.status === 201) {
         // Redirect to home page after successful verification/registration
         navigate('/');
       } else {
