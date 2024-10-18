@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+  }, {
+    timestamps: false, // Disable `createdAt` and `updatedAt`
   });
 
   Role.associate = function(models) {

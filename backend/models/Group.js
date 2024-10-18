@@ -14,6 +14,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+    }, {
+      timestamps: false, // Disable `createdAt` and `updatedAt`
     });
   
     // Defining associations

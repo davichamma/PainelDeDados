@@ -1,8 +1,8 @@
 // routes/adminRoutes.js
 const express = require('express');
 const { User, Report, Role } = require('../models');
-const { authenticateJWT, authorizeRole } = require('../middleware/authMiddleware');
-
+const authenticateJWT = require('../middleware/authMiddleware');
+const authorizeRole = require('../middleware/roleMiddleware');
 const router = express.Router();
 
 // Admin: Assign reports to users

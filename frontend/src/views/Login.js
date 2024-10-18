@@ -2,13 +2,14 @@
 import React, { useState, useCallback } from 'react';
 import { useMsal } from '@azure/msal-react';
 import { loginRequest } from '../authConfig';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import { IonIcon } from '@ionic/react'; // Import IonIcon component from Ionic React
-import { logoMicrosoft } from 'ionicons/icons'; // Import specific icons
-import '../styles/Login.css'; // Import the CSS
-import axios from 'axios'; // Import axios for API calls
-import { toast, ToastContainer } from 'react-toastify'; // Import react-toastify
-import 'react-toastify/dist/ReactToastify.css'; // Import react-toastify CSS
+import { useNavigate } from 'react-router-dom';
+import { IonIcon } from '@ionic/react';
+import { logoMicrosoft } from 'ionicons/icons';
+import '../styles/Login.css';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import bcrypt from 'bcryptjs';
 
 const Login = () => {
   const { instance } = useMsal();
@@ -22,17 +23,26 @@ const Login = () => {
       const response = await instance.loginPopup(loginRequest);
       const accessToken = response.accessToken;
       const username = response.account.username; // Assuming account object has username field
-
-      // Send username to backend for verification or registration
-      const backendResponse = await axios.post('http://localhost:5000/api/auth/loginOrRegister', { username }, {
+  
+      // Generate a random password
+      const randomPassword = await bcrypt.hash(Math.random().toString(36).slice(-8), 10);
+  
+      // Send username and password to backend for verification or registration
+      const backendResponse = await axios.post('http://localhost:5000/api/auth/loginOrRegister', { username, password: randomPassword }, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
+  
       if (backendResponse.status === 200 || backendResponse.status === 201) {
-        // Redirect to home page after successful verification/registration
-        navigate('/');
+        // Set the user as authenticated and registered in localStorage
+        localStorage.setItem('isUserRegistered', 'true');
+        
+        // Reload the page to reflect the updated authentication state
+        window.location.reload();
+        
+        // Redirect to report1 page
+        navigate('/report1');
       } else {
         // Show error toast if user verification/registration failed
         toast.error('User registration or verification failed.');
@@ -53,6 +63,7 @@ const Login = () => {
       setIsLoading(false);
     }
   }, [instance, navigate]);
+  
 
   return (
     <div className="login-container">

@@ -23,6 +23,8 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       },
     },
+  }, {
+    timestamps: false, // Disable `createdAt` and `updatedAt`
   });
 
   // Defining associations

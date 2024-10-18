@@ -1,7 +1,8 @@
 // routes/reportRoutes.js
 const express = require('express');
 const { Report, Role, User } = require('../models');
-const { authenticateJWT } = require('../middleware/authMiddleware');
+const authenticateJWT  = require('../middleware/authMiddleware');
+
 
 const router = express.Router();
 

@@ -6,87 +6,34 @@ import reportConfig from './reportList';
 import SideNavBar from './SideNavbar';
 import AdminDashboard from './views/AdminDashboard';
 import AdminLogin from './views/AdminLogin';
-import Login from './views/Login'; 
-import { useMsal } from '@azure/msal-react'; 
-import { loginRequest } from './authConfig';
+import Login from './views/Login';
+import { useMsal } from '@azure/msal-react';
 import '@ionic/react/css/core.css';
-import axios from 'axios';
 
 function App() {
-  const { instance, accounts } = useMsal();
+  const { accounts } = useMsal();
   const isAuthenticated = accounts.length > 0; // Azure AD Authentication
   const isAdminAuthenticated = localStorage.getItem('isAuthenticatedAdmin') === 'true'; // Admin Authentication
-  const [isUserRegistered, setIsUserRegistered] = useState(false); // Database registration status
-  const [isLoadingUser, setIsLoadingUser] = useState(true); // Loading state for user registration check
+  const [isUserRegistered, setIsUserRegistered] = useState(false); // Start with false
 
-  const getAccessToken = useCallback(async () => {
-    try {
-      const response = await instance.acquireTokenSilent({
-        ...loginRequest,
-        account: accounts[0],
-      });
-      return response.accessToken; // Use this token when needed
-    } catch (error) {
-      console.error('Silent token acquisition failed, trying popup...', error);
-      try {
-        const response = await instance.acquireTokenPopup({
-          ...loginRequest,
-          account: accounts[0],
-        });
-        return response.accessToken; // Use this token when needed
-      } catch (popupError) {
-        console.error('Popup token acquisition failed:', popupError);
-        return null;
-      }
-    }
-  }, [instance, accounts]);
-
+  // Assume that Login.js sets the local storage after registration or login
   useEffect(() => {
+    // Fetch the registration status from local storage if user is authenticated
     if (isAuthenticated) {
-      // Fetch the token when the user is authenticated
-      getAccessToken().then(async (token) => {
-        if (token) {
-          console.log('Token fetched successfully');
-          try {
-            // Check if the user is registered in the database
-            const response = await axios.get('http://localhost:5000/api/auth/checkUser', {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
-            if (response.status === 200) {
-              setIsUserRegistered(true);
-            } else {
-              setIsUserRegistered(false);
-            }
-          } catch (error) {
-            console.error('Failed to verify user registration:', error);
-            setIsUserRegistered(false);
-          } finally {
-            setIsLoadingUser(false);
-          }
-        } else {
-          setIsLoadingUser(false);
-        }
-      });
-    } else {
-      setIsLoadingUser(false);
+      const userStatus = localStorage.getItem('isUserRegistered') === 'true';
+      setIsUserRegistered(userStatus);
     }
-  }, [isAuthenticated, getAccessToken]);
+  }, [isAuthenticated]);
 
   return (
     <Router>
       <div className="App">
-        {isLoadingUser ? (
-          <div>Loading...</div> // Show loading indicator while checking registration
-        ) : (
+        {/* If the user is not authenticated, show the login page */}
+        {isAuthenticated && isUserRegistered ? (
           <>
             <Routes>
               {/* Home Route */}
-              <Route path="/" element={isAuthenticated && isUserRegistered ? <Navigate to="/report1" /> : <Navigate to="/login" />} />
-
-              {/* Login Route */}
-              <Route path="/login" element={<Login />} /> 
+              <Route path="/" element={<Navigate to="/report1" />} />
 
               {/* Admin Login Route */}
               <Route path="/admin-login" element={<AdminLogin />} />
@@ -104,29 +51,31 @@ function App() {
               />
 
               {/* Report Routes (Protected by isAuthenticated) */}
-              <Route path="/report1" element={isAuthenticated && isUserRegistered ? <DynamicPowerBIReport reportUrl={reportConfig.report1} /> : <Navigate to="/login" />} />
-              <Route path="/report2" element={isAuthenticated && isUserRegistered ? <DynamicPowerBIReport reportUrl={reportConfig.report2} /> : <Navigate to="/login" />} />
-              <Route path="/report3" element={isAuthenticated && isUserRegistered ? <DynamicPowerBIReport reportUrl={reportConfig.report3} /> : <Navigate to="/login" />} />
-              <Route path="/report4" element={isAuthenticated && isUserRegistered ? <DynamicPowerBIReport reportUrl={reportConfig.report4} /> : <Navigate to="/login" />} />
-              <Route path="/report5" element={isAuthenticated && isUserRegistered ? <DynamicPowerBIReport reportUrl={reportConfig.report5} /> : <Navigate to="/login" />} />
-              <Route path="/report6" element={isAuthenticated && isUserRegistered ? <DynamicPowerBIReport reportUrl={reportConfig.report6} /> : <Navigate to="/login" />} />
-              <Route path="/report7" element={isAuthenticated && isUserRegistered ? <DynamicPowerBIReport reportUrl={reportConfig.report7} /> : <Navigate to="/login" />} />
+              <Route path="/report1" element={<DynamicPowerBIReport reportUrl={reportConfig.report1} />} />
+              <Route path="/report2" element={<DynamicPowerBIReport reportUrl={reportConfig.report2} />} />
+              <Route path="/report3" element={<DynamicPowerBIReport reportUrl={reportConfig.report3} />} />
+              <Route path="/report4" element={<DynamicPowerBIReport reportUrl={reportConfig.report4} />} />
+              <Route path="/report5" element={<DynamicPowerBIReport reportUrl={reportConfig.report5} />} />
+              <Route path="/report6" element={<DynamicPowerBIReport reportUrl={reportConfig.report6} />} />
+              <Route path="/report7" element={<DynamicPowerBIReport reportUrl={reportConfig.report7} />} />
 
               {/* Catch-All Route */}
-              <Route path="*" element={<Navigate to="/" />} />
+              <Route path="*" element={<Navigate to="/report1" />} />
             </Routes>
 
             {/* If user is authenticated and registered, show the sidebar and footer */}
-            {isAuthenticated && isUserRegistered && (
-              <>
-                <SideNavBar isOpen={true} />
-                <footer className="app-footer">
-                  <p>2024 Elaborado por Gerência Executiva SESI. Todos os direitos reservados.</p>
-                  <Link to="/admin-login" className="admin-link">Área Administrativa</Link>
-                </footer>
-              </>
-            )}
+            <SideNavBar isOpen={true} />
+            <footer className="app-footer">
+              <p>2024 Elaborado por Gerência Executiva SESI. Todos os direitos reservados.</p>
+              <Link to="/admin-login" className="admin-link">Área Administrativa</Link>
+            </footer>
           </>
+        ) : (
+          <Routes>
+            {/* Login Route */}
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Navigate to="/login" />} /> {/* Redirect to login if not authenticated */}
+          </Routes>
         )}
       </div>
     </Router>
